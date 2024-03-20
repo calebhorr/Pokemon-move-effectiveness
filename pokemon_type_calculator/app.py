@@ -34,22 +34,10 @@ class MainWindow(QMainWindow):
 
         layout = QVBoxLayout()
         widgets = [
-            QCheckBox,
             QComboBox,
-            QDateEdit,
-            QDateTimeEdit,
-            QDial,
-            QDoubleSpinBox,
-            QFontComboBox,
-            QLCDNumber,
+            QComboBox,
+            QComboBox,
             QLabel,
-            QLineEdit,
-            QProgressBar,
-            QPushButton,
-            QRadioButton,
-            QSlider,
-            QSpinBox,
-            QTimeEdit,
         ]
 
         for w in widgets:
