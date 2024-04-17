@@ -27,7 +27,6 @@ class MainWindow(QMainWindow):
         global attack_type_combo_box
         global defense_type_one_combo_box
         global defense_type_two_combo_box
-        global calculation_label
         super().__init__()
         super(MainWindow, self).__init__()
 
@@ -74,32 +73,45 @@ class MainWindow(QMainWindow):
         calculate_button.clicked.connect(self.button_was_pressed)
         layout5.addWidget(calculate_button)
 
+        app_title = QLabel(text='Pokemon move effectiveness Calculator')
+        
+        layout_app.addWidget(app_title)
+        layout_app.addSpacing(50)
         layout_app.addLayout(layout4)
+        layout_app.addSpacing(50)
         layout_app.addLayout(layout5)
         widget = QWidget()
         widget.setLayout(layout_app)
         self.setCentralWidget(widget)
-
+        self.pokemon_types = [
+            'Normal',
+            'Fire',
+            'Water',
+            'Elecrtic',
+            'Grass',
+            'Ice',
+            'Fighting',
+            'Poison',
+            'Ground',
+            'Flying',
+            'Psychic',
+            'Bug',
+            'Rock',
+            'Ghost',
+            'Dragon',
+            'Dark',
+            'Steel',
+            'Fairy',
+            ]
     def button_was_pressed(self):
         self.attack_type = attack_type_combo_box.currentText()
         self.defense_type_one = defense_type_one_combo_box.currentText()
         self.defense_type_two = defense_type_two_combo_box.currentText()
-        
+        pokemon_types = self.pokemon_types
         attack_type = self.attack_type
         defense_type_one = self.defense_type_one
         defense_type_two = self.defense_type_two
-        pokemon_types = [
-            
 
-
-
-
-
-
-
-
-            
-        ]
 
 
         if defense_type_two == "None": 
@@ -108,7 +120,18 @@ class MainWindow(QMainWindow):
             defense_type_two = "and " + defense_type_two + " "
         elif defense_type_one == defense_type_two:
             defense_type_two = ""
-        self.calculation_phrase = f"The {attack_type} move will deal 1x damage to the {defense_type_one} {defense_type_two}type pokemon"
+        """
+        if attack_type == pokemon_types[0] and defense_type_one == pokemon_types[12,16] :
+            first_multiplier = 0.5
+        if attack_type == pokemon_types[0] and defense_type_two == pokemon_types[12,16] :
+            second_multiplier = 0.5
+        damage_multiplier = first_multiplier * second_multiplier
+        """
+        #placeholder code so the program doesn't crash
+        damage_multiplier = 1
+
+
+        self.calculation_phrase = f"The {attack_type} move will deal {damage_multiplier}x damage to the {defense_type_one} {defense_type_two}type pokemon"
         print(self.calculation_phrase)
 
 
