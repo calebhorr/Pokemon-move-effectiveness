@@ -24,9 +24,6 @@ from PyQt6.QtGui import QPalette, QColor
 
 class MainWindow(QMainWindow):
     def __init__(self):
-        global attack_type_combo_box
-        global defense_type_one_combo_box
-        global defense_type_two_combo_box
         super().__init__()
         super(MainWindow, self).__init__()
 
@@ -37,27 +34,29 @@ class MainWindow(QMainWindow):
         layout3 = QVBoxLayout()
         layout4 = QHBoxLayout()
         layout5 = QHBoxLayout()
-
+        layout6 = QHBoxLayout()
+        layout7 = QHBoxLayout()
+        layout8 = QVBoxLayout()
         layout_app = QVBoxLayout()
         layout1.addWidget(QLabel('what is the typing of the attack'))
-        attack_type_combo_box = QComboBox()
-        attack_type_combo_box.addItems(["Normal", "Fire", "Water", "Grass", "Flying", "Fighting", "Poison", "Electric", 
+        self.attack_type_combo_box = QComboBox()
+        self.attack_type_combo_box.addItems(["Normal", "Fire", "Water", "Grass", "Flying", "Fighting", "Poison", "Electric", 
                                         "Ground", "Rock", "Psychic", "Ice", "Bug", "Ghost", "Steel", "Dragon", "Dark", "Fairy"])
-        layout1.addWidget(attack_type_combo_box)
+        layout1.addWidget(self.attack_type_combo_box)
         layout1.addStretch()
 
         layout2.addWidget(QLabel('what is the first or only type of the defending pokemon'))
-        defense_type_one_combo_box = QComboBox()
-        defense_type_one_combo_box.addItems(["Normal", "Fire", "Water", "Grass", "Flying", "Fighting", "Poison", "Electric", 
+        self.defense_type_one_combo_box = QComboBox()
+        self.defense_type_one_combo_box.addItems(["Normal", "Fire", "Water", "Grass", "Flying", "Fighting", "Poison", "Electric", 
                                         "Ground", "Rock", "Psychic", "Ice", "Bug", "Ghost", "Steel", "Dragon", "Dark", "Fairy"])
-        layout2.addWidget(defense_type_one_combo_box)
+        layout2.addWidget(self.defense_type_one_combo_box)
         layout2.addStretch()
 
         layout3.addWidget(QLabel('what is the second type of the defending pokemon'))
-        defense_type_two_combo_box = QComboBox()
-        defense_type_two_combo_box.addItems(["Normal", "Fire", "Water", "Grass", "Flying", "Fighting", "Poison", "Electric", 
+        self.defense_type_two_combo_box = QComboBox()
+        self.defense_type_two_combo_box.addItems(["Normal", "Fire", "Water", "Grass", "Flying", "Fighting", "Poison", "Electric", 
                                         "Ground", "Rock", "Psychic", "Ice", "Bug", "Ghost", "Steel", "Dragon", "Dark", "Fairy", "None"])
-        layout3.addWidget(defense_type_two_combo_box)
+        layout3.addWidget(self.defense_type_two_combo_box)
         layout3.addStretch()
 
         
@@ -73,16 +72,37 @@ class MainWindow(QMainWindow):
         calculate_button.clicked.connect(self.button_was_pressed)
         layout5.addWidget(calculate_button)
 
+        damage_text_label = QLabel("That move is: ")
+        damage_text_dynamic = QLabel("")
+        layout6.addSpacing(200)
+        layout6.addWidget(damage_text_label)
+        layout6.addWidget(damage_text_dynamic)
+
+        damage_multiplier_label = QLabel("And will deal:")
+        damage_multiplier_dynamic = QLabel("")
+        layout7.addSpacing(200)
+        layout7.addWidget(damage_multiplier_label)
+        layout7.addWidget(damage_multiplier_dynamic)
+
+        layout8.addLayout(layout6)
+        layout8.addLayout(layout7)
+
+
+
         app_title = QLabel(text='Pokemon move effectiveness Calculator')
-        
         layout_app.addWidget(app_title)
         layout_app.addSpacing(50)
         layout_app.addLayout(layout4)
         layout_app.addSpacing(50)
         layout_app.addLayout(layout5)
+        layout_app.addSpacing(50)
+        layout_app.addLayout(layout8)
+
+
         widget = QWidget()
         widget.setLayout(layout_app)
         self.setCentralWidget(widget)
+
         self.pokemon_types = [
             'Normal',
             'Fire',
@@ -103,14 +123,29 @@ class MainWindow(QMainWindow):
             'Steel',
             'Fairy',
             ]
+    
     def button_was_pressed(self):
-        self.attack_type = attack_type_combo_box.currentText()
-        self.defense_type_one = defense_type_one_combo_box.currentText()
-        self.defense_type_two = defense_type_two_combo_box.currentText()
+        attack_type = self.attack_type_combo_box.currentText()
+        defense_type_one = self.defense_type_one_combo_box.currentText()
+        defense_type_two = self.defense_type_two_combo_box.currentText()
         pokemon_types = self.pokemon_types
-        attack_type = self.attack_type
-        defense_type_one = self.defense_type_one
-        defense_type_two = self.defense_type_two
+        first_multiplier = 0
+        second_multiplier = 0
+        damage_multiplier = 1
+
+
+
+        if (attack_type == pokemon_types[0] and (defense_type_one == pokemon_types[12] or defense_type_one == pokemon_types[16])) :
+            first_multiplier = 0.5
+        if (attack_type == pokemon_types[0] and (defense_type_two == pokemon_types[12] or defense_type_two == pokemon_types[16])) :
+            second_multiplier = 0.5
+
+
+
+        
+
+        
+
 
 
 
@@ -120,17 +155,8 @@ class MainWindow(QMainWindow):
             defense_type_two = "and " + defense_type_two + " "
         elif defense_type_one == defense_type_two:
             defense_type_two = ""
-        """
-        if attack_type == pokemon_types[0] and defense_type_one == pokemon_types[12,16] :
-            first_multiplier = 0.5
-        if attack_type == pokemon_types[0] and defense_type_two == pokemon_types[12,16] :
-            second_multiplier = 0.5
+
         damage_multiplier = first_multiplier * second_multiplier
-        """
-        #placeholder code so the program doesn't crash
-        damage_multiplier = 1
-
-
         self.calculation_phrase = f"The {attack_type} move will deal {damage_multiplier}x damage to the {defense_type_one} {defense_type_two}type pokemon"
         print(self.calculation_phrase)
 
