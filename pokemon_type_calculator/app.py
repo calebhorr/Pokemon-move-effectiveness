@@ -1,5 +1,5 @@
 import sys
-
+import controller
 from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtWidgets import (
     QApplication,
@@ -104,24 +104,24 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
 
         self.pokemon_types = [
-            'Normal',
-            'Fire',
-            'Water',
-            'Elecrtic',
-            'Grass',
-            'Ice',
-            'Fighting',
-            'Poison',
-            'Ground',
-            'Flying',
-            'Psychic',
-            'Bug',
-            'Rock',
-            'Ghost',
-            'Dragon',
-            'Dark',
-            'Steel',
-            'Fairy',
+            'Normal',#0
+            'Fire',#1
+            'Water',#2
+            'Elecrtic',#3
+            'Grass',#4
+            'Ice',#5
+            'Fighting',#6
+            'Poison',#7
+            'Ground',#8
+            'Flying',#9
+            'Psychic',#10
+            'Bug',#11
+            'Rock',#12
+            'Ghost',#13
+            'Dragon',#14
+            'Dark',#15
+            'Steel',#16
+            'Fairy',#17
             ]
     
     def button_was_pressed(self):
@@ -129,34 +129,22 @@ class MainWindow(QMainWindow):
         defense_type_one = self.defense_type_one_combo_box.currentText()
         defense_type_two = self.defense_type_two_combo_box.currentText()
         pokemon_types = self.pokemon_types
-        first_multiplier = 0
-        second_multiplier = 0
-        damage_multiplier = 1
 
 
 
-        if (attack_type == pokemon_types[0] and (defense_type_one == pokemon_types[12] or defense_type_one == pokemon_types[16])) :
-            first_multiplier = 0.5
-        if (attack_type == pokemon_types[0] and (defense_type_two == pokemon_types[12] or defense_type_two == pokemon_types[16])) :
-            second_multiplier = 0.5
-
-
-
-        
-
-        
-
-
-
-
-        if defense_type_two == "None": 
+        if defense_type_two == "None" or defense_type_one == defense_type_two:
             defense_type_two = ""
-        elif defense_type_one != defense_type_two:
+
+        controller.calculate(attack_type,defense_type_one,defense_type_two,pokemon_types)
+
+
+
+
+        if defense_type_one != defense_type_two and defense_type_two:
             defense_type_two = "and " + defense_type_two + " "
-        elif defense_type_one == defense_type_two:
-            defense_type_two = ""
 
-        damage_multiplier = first_multiplier * second_multiplier
+
+        #damage_multiplier = first_multiplier * second_multiplier
         self.calculation_phrase = f"The {attack_type} move will deal {damage_multiplier}x damage to the {defense_type_one} {defense_type_two}type pokemon"
         print(self.calculation_phrase)
 
