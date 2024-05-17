@@ -1,6 +1,7 @@
 import sys
 import controller
 from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import (
     QApplication,
     QCheckBox,
@@ -75,10 +76,12 @@ class MainWindow(QMainWindow):
 
         #damage text ex: that move: is super efective
         self.damage_text_label = QLabel('That move: ')
+        self.damage_text_label.setFont(QFont("", 20))
         layout6.addSpacing(275)
         layout6.addWidget(self.damage_text_label)
 
         self.damage_multiplier_label = QLabel('And will deal:')
+        self.damage_multiplier_label.setFont(QFont("", 20))
         layout7.addSpacing(275)
         layout7.addWidget(self.damage_multiplier_label)
 
@@ -161,6 +164,8 @@ class MainWindow(QMainWindow):
 
 
 app = QApplication(sys.argv)
+app.setFont(QFont('Times new roman'))
+app.setStyle('Fusion')
 window = MainWindow()
 window.show()
 
