@@ -164,7 +164,7 @@ class MainWindow(QMainWindow):
 
 
 app = QApplication(sys.argv)
-app.setFont(QFont('Times new roman'))
+app.setFont(QFont(''))
 app.setStyle('Fusion')
 window = MainWindow()
 window.show()
